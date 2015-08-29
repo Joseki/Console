@@ -1,0 +1,27 @@
+{
+    "name": "joseki/console",
+    "description": "Simple Symfony Console integration to Nette Framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Miroslav Paulík",
+            "email": "miras.paulik@seznam.cz"
+        }
+    ],
+    "require": {
+        "php": ">= 5.4.0",
+        "nette/di": "~2.3"
+    },
+    "require-dev": {
+        "nette/tester": "~1.0",
+        "nette/bootstrap": "~2.3",
+        "tracy/tracy": "~2.3",
+        "symfony/console": "~2.3"
+    },
+    "autoload": {
+        "classmap": ["src"]
+    },
+    "autoload-dev": {
+        "classmap": ["src", "tests"]
+    }
+}

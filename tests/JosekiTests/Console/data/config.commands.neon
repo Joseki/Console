@@ -1,0 +1,8 @@
+console:
+  commands:
+    - JosekiTests\Console\CommandMock1
+
+services:
+  - class: JosekiTests\Console\CommandMock2
+    tags: ['joseki.console.command']
+  

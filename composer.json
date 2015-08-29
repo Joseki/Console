@@ -1,6 +1,7 @@
 {
     "name": "joseki/console",
     "description": "Simple Symfony Console integration to Nette Framework",
+    "keywords": ["nette", "joseki", "console"],
     "license": "MIT",
     "authors": [
         {

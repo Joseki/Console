@@ -2,8 +2,6 @@ Joseki/Console
 ======
 
 [![Build Status](https://travis-ci.org/Joseki/Console.svg?branch=master)](https://travis-ci.org/Joseki/Console)
-[![Latest stable](https://img.shields.io/packagist/v/joseki/console.svg)](https://packagist.org/packages/joseki/console)
-
 
 Requirements
 ------------

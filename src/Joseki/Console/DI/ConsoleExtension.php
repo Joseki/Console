@@ -15,7 +15,8 @@ class ConsoleExtension extends CompilerExtension
 	const TAG_COMMAND = 'joseki.console.command';
 
 	public $defaults = [
-		'applicationClass' => 'Joseki\Console\Application'
+		'applicationClass' => 'Joseki\Console\Application',
+		'commands' => [],
 	];
 
 	public function loadConfiguration()

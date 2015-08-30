@@ -4,7 +4,7 @@
  * Test: Joseki\Console\Extension.
  *
  * @testCase Joseki\Console\ExtensionTest
- * @author Miroslav Paulík <miras.paulik@seznam.cz>
+ * @author Miroslav Paulï¿½k <miras.paulik@seznam.cz>
  */
 
 namespace JosekiTests\Console;
@@ -63,6 +63,20 @@ class ExtensionTest extends Tester\TestCase
 
 		Assert::true($cli instanceof Joseki\Console\Application);
 		Assert::equal(2, count($cli->all('test')));
+	}
+
+	public function testNoCommands()
+	{
+		$config = $this->prepareConfigurator();
+
+		/** @var \Nette\DI\Container $container */
+		$container = $config->createContainer();
+
+		/** @var Joseki\Console\Application $cli */
+		$cli = $container->getService('console.cli');
+
+		Assert::true($cli instanceof Joseki\Console\Application);
+		Assert::equal(0, count($cli->all('test')));
 	}
 
 }

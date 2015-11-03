@@ -32,7 +32,7 @@ Setup
 <?php
 /** @var Nette\DI\Container $container */
 $container = require __DIR__ . '/bootstrap.php';
-$application = $container->getByType('Joseki\Console\Application');
+$application = $container->getService('Console.cli');
 $application->run();
 ```
 
@@ -69,4 +69,39 @@ Running a console command
 
 ```sh
 app/console yourCommandName
+```
+
+Too many commands? Long command names (including namespaces)?
+-------------------------
+
+Split your commands by their namespaces into separate console scripts. Separate your cron script from your database generators or migrations or whatever groups of commands you have.
+Simply register your console alias and namespace prefix of you commands group as follows:
+
+```yml
+Console:
+  console:
+    cron: 'myapp:crons'       # accepts only commands from 'myapp:crons' namespace, eg. 'myapp:crons:emails'
+```
+
+Then create a new console file `bin/cron`:
+
+```php
+#!/usr/bin/env php
+<?php
+/** @var Nette\DI\Container $container */
+$container = require __DIR__ . '/bootstrap.php';
+$application = $container->getService('Console.console.cron');
+$application->run();
+```
+
+and run your commands with suffix name only. Compare old:
+
+```sh
+app/console myapp:crons:emails
+```
+
+with newly created way:
+
+```sh
+app/cron emails
 ```

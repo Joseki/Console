@@ -8,14 +8,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Application extends \Symfony\Component\Console\Application
 {
 
-    protected $config;
-
-
-
-    public function __construct($config)
+    public function __construct()
     {
         parent::__construct('Joseki/Console by Miroslav Paulik.');
-        $this->config = $config;
     }
 
 

@@ -1,0 +1,9 @@
+console:
+  commands:
+    - Symfony\Component\Console\Command\Command('hidden')
+    - Symfony\Component\Console\Command\Command('test:foo')
+    - Symfony\Component\Console\Command\Command('test:bar')
+
+  console:
+    clever: test
+  

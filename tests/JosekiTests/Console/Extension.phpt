@@ -20,64 +20,87 @@ require_once __DIR__ . '/../bootstrap.php';
 class CommandMock1 extends Command
 {
 
-	protected function configure()
-	{
-		$this->setName('test:mock1')->setDescription('Simple first command');
-	}
+    protected function configure()
+    {
+        $this->setName('test:mock1')->setDescription('Simple first command');
+    }
 
 }
 
 class CommandMock2 extends Command
 {
 
-	protected function configure()
-	{
-		$this->setName('test:mock2')->setDescription('Simple second command');
-	}
+    protected function configure()
+    {
+        $this->setName('test:mock2')->setDescription('Simple second command');
+    }
 
 }
 
 class ExtensionTest extends Tester\TestCase
 {
 
-	private function prepareConfigurator()
-	{
-		$config = new Nette\Configurator();
-		$config->setTempDirectory(TEMP_DIR);
-		$config->addParameters(array('container' => array('class' => 'SystemContainer_' . Nette\Utils\Random::generate())));
-		Joseki\Console\DI\ConsoleExtension::register($config);
+    private function prepareConfigurator()
+    {
+        $config = new Nette\Configurator();
+        $config->setTempDirectory(TEMP_DIR);
+        $config->addParameters(array('container' => array('class' => 'SystemContainer_' . Nette\Utils\Random::generate())));
+        Joseki\Console\DI\ConsoleExtension::register($config);
 
-		return $config;
-	}
+        return $config;
+    }
 
-	public function testCommands()
-	{
-		$config = $this->prepareConfigurator();
-		$config->addConfig(__DIR__ . '/data/config.commands.neon', Nette\Configurator::NONE);
 
-		/** @var \Nette\DI\Container $container */
-		$container = $config->createContainer();
 
-		/** @var Joseki\Console\Application $cli */
-		$cli = $container->getService('console.cli');
+    public function testCommands()
+    {
+        $config = $this->prepareConfigurator();
+        $config->addConfig(__DIR__ . '/data/config.commands.neon', Nette\Configurator::NONE);
 
-		Assert::true($cli instanceof Joseki\Console\Application);
-		Assert::equal(2, count($cli->all('test')));
-	}
+        /** @var \Nette\DI\Container $container */
+        $container = $config->createContainer();
 
-	public function testNoCommands()
-	{
-		$config = $this->prepareConfigurator();
+        /** @var Joseki\Console\Application $cli */
+        $cli = $container->getService('console.cli');
 
-		/** @var \Nette\DI\Container $container */
-		$container = $config->createContainer();
+        Assert::true($cli instanceof Joseki\Console\Application);
+        Assert::equal(2, count($cli->all('test')));
+    }
 
-		/** @var Joseki\Console\Application $cli */
-		$cli = $container->getService('console.cli');
 
-		Assert::true($cli instanceof Joseki\Console\Application);
-		Assert::equal(0, count($cli->all('test')));
-	}
+
+    public function testNoCommands()
+    {
+        $config = $this->prepareConfigurator();
+
+        /** @var \Nette\DI\Container $container */
+        $container = $config->createContainer();
+
+        /** @var Joseki\Console\Application $cli */
+        $cli = $container->getService('console.cli');
+
+        Assert::true($cli instanceof Joseki\Console\Application);
+        Assert::equal(0, count($cli->all('test')));
+    }
+
+
+
+    public function testCleverConsole()
+    {
+        $config = $this->prepareConfigurator();
+        $config->addConfig(__DIR__ . '/data/config.clever.console.neon', Nette\Configurator::NONE);
+
+        /** @var \Nette\DI\Container $container */
+        $container = $config->createContainer();
+
+        /** @var Joseki\Console\Application $console */
+        $console = $container->getService('console.console.clever');
+
+        Assert::true($console instanceof Joseki\Console\CleverApplication);
+        Assert::equal(2, count($console->all()));
+        Assert::true($console->find('foo') instanceof Command);
+        Assert::true($console->find('bar') instanceof Command);
+    }
 
 }
 

@@ -20,17 +20,15 @@ class CleverApplication extends Application
 
 
 
-    public function find($name)
-    {
-        return parent::find(sprintf('%s:%s', $this->prefix, $name));
-    }
-
-
-
     public function add(Command $command)
     {
         $name = $command->getName();
         if (substr($name, 0, strlen($this->prefix)) === $this->prefix) {
+            $name = trim(substr($name, strlen($this->prefix)), ':');
+            $command = clone $command;
+            $command->setName($name);
+            parent::add($command);
+        } elseif (in_array($name, ['list', 'help'])) {
             parent::add($command);
         }
     }

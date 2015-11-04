@@ -97,7 +97,7 @@ class ExtensionTest extends Tester\TestCase
         $console = $container->getService('console.console.clever');
 
         Assert::true($console instanceof Joseki\Console\CleverApplication);
-        Assert::equal(2, count($console->all()));
+        Assert::equal(4, count($console->all())); // list and help are defaults
         Assert::true($console->find('foo') instanceof Command);
         Assert::true($console->find('bar') instanceof Command);
     }

@@ -8,6 +8,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Application extends \Symfony\Component\Console\Application
 {
 
+    private $showWelcomeMessage = true;
+
     public function __construct()
     {
         parent::__construct('Joseki/Console by Miroslav Paulik.');
@@ -27,7 +29,7 @@ class Application extends \Symfony\Component\Console\Application
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        if ($input->hasParameterOption(array('--help', '-h')) === false && $input->getFirstArgument() !== null) {
+        if ($this->showWelcomeMessage && $input->hasParameterOption(array('--help', '-h')) === false && $input->getFirstArgument() !== null) {
             $output->writeln($this->getLongVersion());
             $output->writeln('');
         }
@@ -45,5 +47,15 @@ class Application extends \Symfony\Component\Console\Application
         }
 
         return sprintf('<info>%s</info>', $name);
+    }
+
+
+
+    /**
+     * @param boolean $showWelcomeMessage
+     */
+    public function enableWelcomeMessage($showWelcomeMessage = true)
+    {
+        $this->showWelcomeMessage = (bool)$showWelcomeMessage;
     }
 } 
